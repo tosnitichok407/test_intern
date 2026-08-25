@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>จัดการคลังสินค้า | จัดการสินค้าและสต็อก</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="#top"
+        ><span class="brand-mark">K</span><span>จัดการคลังสินค้า</span></a
+      >
+      <nav aria-label="เมนูหลัก">
+        <a class="nav-link active" href="#top"><span>▦</span>ภาพรวม</a>
+        <a class="nav-link" href="#products"><span>□</span>สินค้า</a>
+        <a class="nav-link" href="#stock"><span>↕</span>ปรับสต็อก</a>
+      </nav>
+      <p class="sidebar-help">จัดการสินค้าของคุณ<br />ได้ในที่เดียว</p>
+    </aside>
+
+    <main id="top">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">จัดการคลังสินค้า</p>
+          <h1>Welcome 👋</h1>
+        </div>
+        <button class="outline-button" id="refreshButton" type="button">
+          ↻ รีเฟรชข้อมูล
+        </button>
+      </header>
+
+      <section class="stats" aria-label="สรุปคลังสินค้า">
+        <article class="stat-card">
+          <span class="stat-icon blue">▦</span>
+          <div>
+            <p>สินค้าทั้งหมด</p>
+            <strong id="productCount">—</strong><small>รายการในคลัง</small>
+          </div>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon purple">▤</span>
+          <div>
+            <p>จำนวนคงเหลือรวม</p>
+            <strong id="stockCount">—</strong><small>ชิ้นพร้อมใช้งาน</small>
+          </div>
+        </article>
+        <article class="stat-card warning">
+          <span class="stat-icon orange">!</span>
+          <div>
+            <p>สินค้าใกล้หมด</p>
+            <strong id="lowStockCount">—</strong
+            ><small>เหลือน้อยกว่า 5 ชิ้น</small>
+          </div>
+        </article>
+      </section>
+
+      <section class="workspace">
+        <article class="panel" id="stock">
+          <div class="panel-heading">
+            <div>
+              <h2>ปรับสต็อก</h2>
+              <p>เพิ่มหรือลดจำนวนสินค้าในคลัง</p>
+            </div>
+            <span class="badge">บันทึกประวัติอัตโนมัติ</span>
+          </div>
+          <form id="stockForm" class="form-grid">
+            <label class="full"
+              >สินค้า<select id="adjustProduct" required>
+                <option value="">เลือกสินค้า</option>
+              </select></label
+            >
+            <fieldset class="full type-selector">
+              <legend>ประเภทรายการ</legend>
+              <label
+                ><input
+                  type="radio"
+                  name="transactionType"
+                  value="IN"
+                  checked
+                />
+                <span class="type in">+ รับเข้า</span></label
+              ><label
+                ><input type="radio" name="transactionType" value="OUT" />
+                <span class="type out">− เบิกออก</span></label
+              >
+            </fieldset>
+            <label
+              >จำนวน (ชิ้น)<input
+                id="adjustQuantity"
+                type="number"
+                min="1"
+                step="1"
+                placeholder="เช่น 10"
+                required
+            /></label>
+            <label
+              >เหตุผล <p class="optional">(ไม่บังคับ)</p>
+              <input
+                id="adjustReason"
+                type="text"
+                maxlength="255"
+                placeholder="เช่น รับสินค้ารอบใหม่"
+            /></label>
+            <button class="primary-button full" type="submit">
+              บันทึกรายการปรับสต็อก
+            </button>
+          </form>
+        </article>
+
+        <article class="panel add-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>เพิ่มสินค้าใหม่</h2>
+              <p>กรอกรายละเอียดเพื่อเริ่มติดตามสต็อก</p>
+            </div>
+          </div>
+          <form id="productForm" class="form-grid">
+            <label
+              >รหัสสินค้า (SKU)<input
+                id="sku"
+                required
+                maxlength="80"
+                placeholder="เช่น IT-001"
+            /></label>
+            <label
+              >ชื่อสินค้า<input
+                id="productName"
+                required
+                maxlength="255"
+                placeholder="เช่น เมาส์ไร้สาย"
+            /></label>
+            <label
+              >หมวดหมู่<select id="category" required>
+                <option value="">เลือกหมวดหมู่</option>
+              </select></label
+            >
+            <label
+              >ราคาทุน (บาท)<input
+                id="costPrice"
+                type="number"
+                min="0"
+                step="0.01"
+                required
+                placeholder="0.00"
+            /></label>
+            <label class="full"
+              >จำนวนเริ่มต้น (ชิ้น)<input
+                id="initialStock"
+                type="number"
+                min="0"
+                step="1"
+                value="0"
+                required
+            /></label>
+            <button class="primary-button full" type="submit">
+              + เพิ่มสินค้าเข้าคลัง
+            </button>
+          </form>
+        </article>
+      </section>
+
+      <section class="panel table-panel" id="products">
+        <div class="panel-heading">
+          <div>
+            <h2>สินค้าในคลัง</h2>
+            <p id="tableSubtitle">กำลังโหลดข้อมูล…</p>
+          </div>
+          <div class="search">
+            <span>⌕</span
+            ><input
+              id="searchInput"
+              type="search"
+              placeholder="ค้นหาชื่อสินค้า หรือ SKU"
+            />
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>สินค้า</th>
+                <th>หมวดหมู่</th>
+                <th>ราคาทุน</th>
+                <th>คงเหลือ</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="productTable"></tbody>
+          </table>
+        </div>
+        <p class="empty-state" id="emptyProducts" hidden>
+          ยังไม่มีสินค้าในคลัง เริ่มต้นด้วยการเพิ่มสินค้ารายการแรกได้เลย
+        </p>
+      </section>
+
+      <section class="panel alert-panel">
+        <div class="panel-heading">
+          <div>
+            <h2>
+              สินค้าใกล้หมด
+              <span class="badge warning-badge" id="alertBadge">0 รายการ</span>
+            </h2>
+            <p>สินค้าเหลือน้อยกว่า 5 ชิ้น ควรวางแผนเติมสต็อก</p>
+          </div>
+        </div>
+        <div class="low-stock-list" id="lowStockList">
+          <p class="muted">กำลังตรวจสอบสต็อก…</p>
+        </div>
+      </section>
+    </main>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
