@@ -1,5 +1,27 @@
 # API Documentation — Test Intern
 
+## การติดตั้งและเตรียมฐานข้อมูล
+
+คัดลอก `.env.example` เป็น `.env` แล้วกำหนดค่า PostgreSQL ให้ตรงกับเครื่องของคุณ จากนั้นสร้างฐานข้อมูลและนำเข้าโครงสร้างกับข้อมูลตัวอย่าง:
+
+```bash
+createdb ชื่อ_database_ของคุณ
+psql -U postgres -d ชื่อ_database_ของคุณ -f database/schema.sql
+psql -U postgres -d ชื่อ_database_ของคุณ -f database/seed.sql
+npm install
+npm run dev
+```
+
+หากต้องการสร้างไฟล์ SQL จากฐานข้อมูลที่มีอยู่ ให้ใช้คำสั่งต่อไปนี้ โดยแทน `ชื่อ_database_ของคุณ` ด้วยค่า `DB_NAME` ใน `.env`:
+
+```bash
+mkdir database
+pg_dump -U postgres -d ชื่อ_database_ของคุณ --schema-only > database/schema.sql
+pg_dump -U postgres -d ชื่อ_database_ของคุณ --data-only --inserts > database/seed.sql
+```
+
+หากใช้ pgAdmin ให้คลิกขวาที่ database แล้วเลือก **Backup...** ใช้ Format เป็น `Plain` และเลือก `Schema only` สำหรับ `schema.sql` หรือ `Data only` สำหรับ `seed.sql`
+
 Base URL: `http://localhost:3000/api`
 
 ทุก Request/Response เป็น JSON — ต้องส่ง Header:
